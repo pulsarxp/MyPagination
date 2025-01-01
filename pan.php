@@ -17,19 +17,19 @@
 require 'db_connect.php';
 
 $typeOptions = "";
-$typeQuery = "SELECT DISTINCT types FROM 360menu_com WHERE types IS NOT NULL";
+$typeQuery = "SELECT DISTINCT category FROM 360menu_com WHERE category IS NOT NULL";
 $typeResult = mysqli_query($conn, $typeQuery);
 if ($typeResult) {
     while ($typeRow = mysqli_fetch_assoc($typeResult)) {
-        $selected = (isset($_GET['types']) && $_GET['types'] == $typeRow['types']) ? 'selected' : '';
-        $typeOptions .= "<option value='{$typeRow['types']}' $selected>{$typeRow['types']}</option>";
+        $selected = (isset($_GET['category']) && $_GET['category'] == $typeRow['category']) ? 'selected' : '';
+        $typeOptions .= "<option value='{$typeRow['category']}' $selected>{$typeRow['category']}</option>";
     }
 }
 ?>
 
 <form method="GET" action="" style="text-align: center; margin-bottom: 20px;">
     <label for="typeFilter">Szűrés típus szerint:</label>
-    <select id="typeFilter" name="types">
+    <select id="typeFilter" name="category">
         <option value="">Összes</option>
         <?php echo $typeOptions; ?>
     </select>
@@ -46,8 +46,8 @@ $no_of_records_per_page = 10;
 $offset = ($pageno - 1) * $no_of_records_per_page;
 
 $typeFilter = "";
-if (isset($_GET['types']) && $_GET['types'] != "") {
-    $typeFilter = "WHERE types = '" . mysqli_real_escape_string($conn, $_GET['types']) . "'";
+if (isset($_GET['category']) && $_GET['category'] != "") {
+    $typeFilter = "WHERE category = '" . mysqli_real_escape_string($conn, $_GET['category']) . "'";
 }
 
 $total_pages_sql = "SELECT COUNT(*) FROM 360menu_com $typeFilter";
@@ -61,9 +61,9 @@ while ($row = mysqli_fetch_array($res_data)) {
     echo '<div class="box effect1">';
     $name = $row["name"];
     $url = $row["url"];
-    $comment = $row["megj"];
-    $camtype = $row["cam"];
-    $types = $row["types"];
+    $comment = $row["comment"];
+    $camtype = $row["cam_type"];
+    $category = $row["category"];
     if ($camtype == "g") {
         $image = "gear.png";
     } elseif ($camtype == "m") {
@@ -83,14 +83,14 @@ mysqli_close($conn);
 <tr>
 <td width="80%">
     <ul class="pagination">
-        <li><a href="?pageno=1<?php if(isset($_GET['types'])) echo '&types=' . $_GET['types']; ?>">Első</a></li>
+        <li><a href="?pageno=1<?php if(isset($_GET['category'])) echo '&category=' . $_GET['category']; ?>">Első</a></li>
         <li class="<?php if($pageno <= 1){ echo 'disabled'; } ?>">
-            <a href="<?php if($pageno <= 1){ echo '#'; } else { echo "?pageno=" . ($pageno - 1) . (isset($_GET['types']) ? '&types=' . $_GET['types'] : ''); } ?>">Előző</a>
+            <a href="<?php if($pageno <= 1){ echo '#'; } else { echo "?pageno=" . ($pageno - 1) . (isset($_GET['category']) ? '&category=' . $_GET['category'] : ''); } ?>">Előző</a>
         </li>
         <li class="<?php if($pageno >= $total_pages){ echo 'disabled'; } ?>">
-            <a href="<?php if($pageno >= $total_pages){ echo '#'; } else { echo "?pageno=" . ($pageno + 1) . (isset($_GET['types']) ? '&types=' . $_GET['types'] : ''); } ?>">Következő</a>
+            <a href="<?php if($pageno >= $total_pages){ echo '#'; } else { echo "?pageno=" . ($pageno + 1) . (isset($_GET['category']) ? '&category=' . $_GET['category'] : ''); } ?>">Következő</a>
         </li>
-        <li><a href="?pageno=<?php echo $total_pages; ?><?php if(isset($_GET['types'])) echo '&types=' . $_GET['types']; ?>">Utolsó</a></li>
+        <li><a href="?pageno=<?php echo $total_pages; ?><?php if(isset($_GET['category'])) echo '&category=' . $_GET['category']; ?>">Utolsó</a></li>
     </ul>
 </td>
 <?php
