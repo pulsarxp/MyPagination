@@ -13,13 +13,8 @@
 </table>
 
 <?php
-$conn = mysqli_connect("*****", "*****", "*****", "*****");
-mysqli_set_charset($conn, "utf8");
 
-if (mysqli_connect_errno()) {
-    echo "Failed to connect to MySQL: " . mysqli_connect_error();
-    die();
-}
+require 'db_connect.php';
 
 $typeOptions = "";
 $typeQuery = "SELECT DISTINCT types FROM 360menu_com WHERE types IS NOT NULL";
