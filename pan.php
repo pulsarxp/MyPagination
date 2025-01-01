@@ -47,7 +47,7 @@ if (isset($_GET['pageno'])) {
 } else {
     $pageno = 1;
 }
-$no_of_records_per_page = 8;
+$no_of_records_per_page = 10;
 $offset = ($pageno - 1) * $no_of_records_per_page;
 
 $typeFilter = "";
@@ -67,18 +67,18 @@ while ($row = mysqli_fetch_array($res_data)) {
     $name = $row["name"];
     $url = $row["url"];
     $comment = $row["megj"];
-    $icam = $row["cam"];
+    $camtype = $row["cam"];
     $types = $row["types"];
-    if ($icam == "g") {
-        $kep = "gear.png";
-    } elseif ($icam == "m") {
-        $kep = "mavic.png";
-    } elseif ($icam == "i") {
-        $kep = "insta360.png";
+    if ($camtype == "g") {
+        $image = "gear.png";
+    } elseif ($camtype == "m") {
+        $image = "mavic.png";
+    } elseif ($camtype == "i") {
+        $image = "insta360.png";
     } else {
-        $kep = "nikon.png";
+        $image = "nikon.png";
     }
-    echo '<table width="800" border="0"><tr><th colspan="2"  width="90%"><a href="http://' . $url . '" target="_blank" style="font-size: 20px;">' . $name . '</a></th><th rowspan="2"><img src="' . $kep . '" alt="Cam" height="75" width="75"></th></tr><tr><td colspan="2">' . $comment . '</td></tr></table>';
+    echo '<table width="800" border="0"><tr><th colspan="2"  width="90%"><a href="http://' . $url . '" target="_blank" style="font-size: 20px;">' . $name . '</a></th><th rowspan="2"><img src="' . $image . '" alt="Cam" height="75" width="75"></th></tr><tr><td colspan="2">' . $comment . '</td></tr></table>';
     echo '</div>';
 }
 mysqli_close($conn);
