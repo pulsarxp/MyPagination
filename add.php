@@ -25,6 +25,6 @@ if (mysqli_query($conn, $sql)) {
 mysqli_close($conn);
 
 
-echo "<a href='.php'>Következő</a>";
+echo "<a href='writein.php'>Következő</a>";
 
 ?>
