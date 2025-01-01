@@ -16,7 +16,7 @@ $camtype = $_POST['cam_type'];
 $category = $_POST['category'];
 
 mysqli_set_charset($conn,"utf8");
-$sql = "INSERT INTO $tbl_name (name, url, comment, camtype, category) VALUES ('$name', '$url', '$comment', '$camtype', '$category')";
+$sql = "INSERT INTO $tbl_name (name, url, comment, cam_type, category) VALUES ('$name', '$url', '$comment', '$camtype', '$category')";
 if (mysqli_query($conn, $sql)) {
  echo "New record created successfully";
 } else {
