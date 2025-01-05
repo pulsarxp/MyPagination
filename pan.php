@@ -1,3 +1,7 @@
+<?php
+require 'db_connect.php';
+
+?><!DOCTYPE html>
 <html>
 <head>
     <title>Panoráma képek</title>
@@ -14,29 +18,27 @@
 
 <?php
 
-require 'db_connect.php';
-
 $typeOptions = "";
 $typeQuery = "SELECT DISTINCT category FROM 360menu_com WHERE category IS NOT NULL";
 $typeResult = mysqli_query($conn, $typeQuery);
-if ($typeResult) {
-    while ($typeRow = mysqli_fetch_assoc($typeResult)) {
-        $selected = (isset($_GET['category']) && $_GET['category'] == $typeRow['category']) ? 'selected' : '';
-        $typeOptions .= "<option value='{$typeRow['category']}' $selected>{$typeRow['category']}</option>";
-    }
-}
 ?>
 
 <form method="GET" action="" style="text-align: center; margin-bottom: 20px;">
-    <label for="typeFilter">Szűrés típus szerint:</label>
-    <select id="typeFilter" name="category">
-        <option value="">Összes</option>
-        <?php echo $typeOptions; ?>
-    </select>
-    <button type="submit" class="btn btn-primary">Szűrés</button>
+    <label for="typeFilter">Szűrés típus szerint:</label><br>
+    <a href="?category=" class="btn btn-secondary" style="margin: 5px;">Összes</a>
+    <?php
+    if ($typeResult) {
+        while ($typeRow = mysqli_fetch_assoc($typeResult)) {
+            $category = $typeRow['category'];
+            $activeClass = (isset($_GET['category']) && $_GET['category'] == $category) ? 'btn-primary' : 'btn-secondary';
+            echo "<a href='?category={$category}' class='btn $activeClass' style='margin: 5px;'>{$category}</a>";
+        }
+    }
+    ?>
 </form>
 
 <?php
+
 if (isset($_GET['pageno'])) {
     $pageno = $_GET['pageno'];
 } else {
@@ -77,20 +79,20 @@ while ($row = mysqli_fetch_array($res_data)) {
     echo '</div>';
 }
 mysqli_close($conn);
-
 ?>
+
 <table width="800" border="0" align="center" cellpadding="3" cellspacing="0">
 <tr>
 <td width="80%">
     <ul class="pagination">
-        <li><a href="?pageno=1<?php if(isset($_GET['category'])) echo '&category=' . $_GET['category']; ?>">Első</a></li>
+        <li><a href="?pageno=1<?php if(isset($_GET['category'])) echo '&category=' . $_GET['category']; ?>">Élső</a></li>
         <li class="<?php if($pageno <= 1){ echo 'disabled'; } ?>">
-            <a href="<?php if($pageno <= 1){ echo '#'; } else { echo "?pageno=" . ($pageno - 1) . (isset($_GET['category']) ? '&category=' . $_GET['category'] : ''); } ?>">Előző</a>
+            <a href="<?php if($pageno <= 1){ echo '#'; } else { echo "?pageno=" . ($pageno - 1) . (isset($_GET['category']) ? '&category=' . $_GET['category'] : ''); } ?>">Élőző</a>
         </li>
         <li class="<?php if($pageno >= $total_pages){ echo 'disabled'; } ?>">
-            <a href="<?php if($pageno >= $total_pages){ echo '#'; } else { echo "?pageno=" . ($pageno + 1) . (isset($_GET['category']) ? '&category=' . $_GET['category'] : ''); } ?>">Következő</a>
+            <a href="<?php if($pageno >= $total_pages){ echo '#'; } else { echo "?pageno=" . ($pageno + 1) . (isset($_GET['category']) ? '&category=' . $_GET['category'] : ''); } ?>">Ékövetkező</a>
         </li>
-        <li><a href="?pageno=<?php echo $total_pages; ?><?php if(isset($_GET['category'])) echo '&category=' . $_GET['category']; ?>">Utolsó</a></li>
+        <li><a href="?pageno=<?php echo $total_pages; ?><?php if(isset($_GET['category'])) echo '&category=' . $_GET['category']; ?>">Éutolsó</a></li>
     </ul>
 </td>
 <?php
