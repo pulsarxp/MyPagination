@@ -85,14 +85,14 @@ mysqli_close($conn);
 <tr>
 <td width="80%">
     <ul class="pagination">
-        <li><a href="?pageno=1<?php if(isset($_GET['category'])) echo '&category=' . $_GET['category']; ?>">Élső</a></li>
+        <li><a href="?pageno=1<?php if(isset($_GET['category'])) echo '&category=' . $_GET['category']; ?>">Első</a></li>
         <li class="<?php if($pageno <= 1){ echo 'disabled'; } ?>">
-            <a href="<?php if($pageno <= 1){ echo '#'; } else { echo "?pageno=" . ($pageno - 1) . (isset($_GET['category']) ? '&category=' . $_GET['category'] : ''); } ?>">Élőző</a>
+            <a href="<?php if($pageno <= 1){ echo '#'; } else { echo "?pageno=" . ($pageno - 1) . (isset($_GET['category']) ? '&category=' . $_GET['category'] : ''); } ?>">Előző</a>
         </li>
         <li class="<?php if($pageno >= $total_pages){ echo 'disabled'; } ?>">
-            <a href="<?php if($pageno >= $total_pages){ echo '#'; } else { echo "?pageno=" . ($pageno + 1) . (isset($_GET['category']) ? '&category=' . $_GET['category'] : ''); } ?>">Ékövetkező</a>
+            <a href="<?php if($pageno >= $total_pages){ echo '#'; } else { echo "?pageno=" . ($pageno + 1) . (isset($_GET['category']) ? '&category=' . $_GET['category'] : ''); } ?>">Következő</a>
         </li>
-        <li><a href="?pageno=<?php echo $total_pages; ?><?php if(isset($_GET['category'])) echo '&category=' . $_GET['category']; ?>">Éutolsó</a></li>
+        <li><a href="?pageno=<?php echo $total_pages; ?><?php if(isset($_GET['category'])) echo '&category=' . $_GET['category']; ?>">Utolsó</a></li>
     </ul>
 </td>
 <?php
