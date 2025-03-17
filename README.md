@@ -7,6 +7,8 @@ Egy egyszerű webes alkalmazás panoráma képek megjelenítéséhez és kezelé
 - Panoráma képek listázása
 - Kategóriák szerinti szűrés
 - Új panoráma hozzáadása
+  - Legördülő menüből választható kamera típusok
+  - Legördülő menüből választható kategóriák
 - Lapozás
 - Kameratípusok megjelenítése
 
