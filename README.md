@@ -71,16 +71,6 @@ CREATE TABLE panoramas (
 - XSS védelem htmlspecialchars() használatával
 - Környezeti változók használata az érzékeny adatok tárolásához
 
-## Fejlesztés
-
-A projekt további fejlesztéséhez:
-
-1. Forkolja le a repository-t
-2. Hozzon létre egy új branch-et (`git checkout -b feature/amazing-feature`)
-3. Commitolja a változtatásokat (`git commit -m 'Add some amazing feature'`)
-4. Pusholja a branch-et (`git push origin feature/amazing-feature`)
-5. Nyisson egy Pull Request-et
-
 ## Licensz
 
 Ez a projekt MIT licensz alatt van. Lásd a `LICENSE` fájlt részletekért.
