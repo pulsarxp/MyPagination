@@ -1,0 +1,10 @@
+{
+    "require": {
+        "vlucas/phpdotenv": "^3.6"
+    },
+    "config": {
+        "platform": {
+            "php": "7.0.33"
+        }
+    }
+} 

@@ -1,30 +1,48 @@
 <?php
-$host="*****";
-$username="*****";
-$password="*****";
-$db_name="*****";
-$tbl_name="*****";
+require_once 'config.php';
+require_once 'Database.php';
+require_once 'Panorama.php';
 
-$conn = mysqli_connect("$host", "$username", "$password", "$db_name");
+// Validáció
+$errors = [];
+$data = [
+    'name' => $_POST['name'] ?? '',
+    'url' => $_POST['url'] ?? '',
+    'comment' => $_POST['comment'] ?? '',
+    'cam_type' => $_POST['cam_type'] ?? '',
+    'category' => $_POST['category'] ?? ''
+];
 
-$datetime=date("y-m-d h:i:s");
-
-$name = $_POST['name'];
-$url = $_POST['url'];
-$comment = $_POST['comment'];
-$camtype = $_POST['cam_type'];
-$category = $_POST['category'];
-
-mysqli_set_charset($conn,"utf8");
-$sql = "INSERT INTO $tbl_name (name, url, comment, cam_type, category) VALUES ('$name', '$url', '$comment', '$camtype', '$category')";
-if (mysqli_query($conn, $sql)) {
- echo "New record created successfully";
-} else {
- echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+// Validáció
+if (empty($data['name'])) {
+    $errors[] = "A név megadása kötelező!";
 }
-mysqli_close($conn);
 
+if (empty($data['url'])) {
+    $errors[] = "Az URL megadása kötelező!";
+} elseif (!filter_var($data['url'], FILTER_VALIDATE_URL)) {
+    $errors[] = "Érvénytelen URL formátum!";
+}
 
-echo "<a href='writein.php'>Következő</a>";
+if (empty($data['cam_type'])) {
+    $errors[] = "A kamera típus megadása kötelező!";
+}
 
-?>
+if (empty($errors)) {
+    $db = new Database();
+    $panorama = new Panorama($db);
+    
+    try {
+        $panorama->addPanorama($data);
+        header("Location: writein.php?success=1");
+        exit;
+    } catch (Exception $e) {
+        $errors[] = "Hiba történt a mentés során: " . $e->getMessage();
+    }
+}
+
+// Ha hiba történt, visszairányítjuk a formhoz
+if (!empty($errors)) {
+    header("Location: writein.php?errors=" . urlencode(implode(", ", $errors)));
+    exit;
+}
