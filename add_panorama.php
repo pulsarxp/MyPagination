@@ -35,7 +35,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (empty($errors)) {
         try {
-            $panorama->addPanorama($name, $url, $comment, $camType, $category);
+            $panoramaData = [
+                'name' => $name,
+                'url' => $url,
+                'comment' => $comment,
+                'cam_type' => $camType,
+                'category' => $category
+            ];
+            $panorama->addPanorama($panoramaData);
             header("Location: pan.php");
             exit;
         } catch (Exception $e) {
