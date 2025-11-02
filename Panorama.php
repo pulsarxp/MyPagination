@@ -37,8 +37,10 @@ class Panorama {
         
         $sql = "SELECT COUNT(*) as total FROM " . DB_TABLE . " $whereClause";
         $result = $this->db->query($sql, $params)->fetch();
-        
-        return ceil($result['total'] / $perPage);
+
+        $totalRecords = (int)($result['total'] ?? 0);
+
+        return max(1, (int)ceil($totalRecords / $perPage));
     }
     
     public function addPanorama($data) {
